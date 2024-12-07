@@ -15,6 +15,9 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
     b.Property(x => x.Price).IsRequired(true);
     b.Property(x => x.PictureUrl).HasMaxLength(250).IsRequired(false);
     b.HasOne(x => x.Type).WithMany(o => o.ProductList).HasForeignKey(x => x.TypeId);
-    b.HasOne(x => x.Brand).WithMany(o => o.ProductList).HasForeignKey(x => x.TypeId);
+    b.HasOne(x => x.Brand).WithMany(o => o.ProductList).HasForeignKey(x => x.BrandId);
+    b.Property(x => x.CreatedAt).HasDefaultValueSql("getdate()").IsRequired();
+    b.Property(x => x.UpdateAt).IsRequired(false);
+
   }
 }
