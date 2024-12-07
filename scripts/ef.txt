@@ -1,0 +1,2 @@
+dotnet ef migrations add initial -s src/API
+dotnet ef migrations remove -s src/API
