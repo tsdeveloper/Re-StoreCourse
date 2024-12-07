@@ -9,18 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {   
-    public class ProductsApiController : BaseApiController
+    public class ProductsController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsApiController(RestoreCourseDbContext context)
+        public ProductsController(RestoreCourseDbContext context, ILogger<ProductsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetProductAll()
         {
+            _logger.LogInformation("GET LIST PRODUCT");
             var productList = await _context.DbSet<Product>().ToListAsync();
 
             return Ok(productList);
