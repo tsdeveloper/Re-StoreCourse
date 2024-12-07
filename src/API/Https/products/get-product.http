@@ -1,0 +1,8 @@
+@API_HostAddress = http://localhost:7001/api
+
+### GET PRODUCTS
+GET {{API_HostAddress}}/products
+Accept: application/json
+Content-Type: application/json
+
+###
