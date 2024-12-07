@@ -55,7 +55,7 @@ namespace API.Seed
                 .RuleFor(x => x.Name, p => p.Commerce.Product())
                 .RuleFor(x => x.Description, p => p.Commerce.ProductDescription())
                 .RuleFor(x => x.PictureUrl, p => p.Image.PlaceImgUrl())
-                .RuleFor(x => x.Price, p => p.Random.Decimal(5, 200))
+                .RuleFor(x => x.Price, p => (long)p.Random.Decimal(5, 200))
                 .RuleFor(x => x.TypeId, p => p.PickRandom(idProductTypes))
                 .RuleFor(x => x.BrandId, p => p.PickRandom(idProductBrands))
                 .Generate(20);
