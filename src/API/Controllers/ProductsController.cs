@@ -28,5 +28,14 @@ namespace API.Controllers
 
             return Ok(productList);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            _logger.LogInformation($"GET LIST PRODUCT BY ID {id}");
+            var product = await _context.DbSet<Product>().FirstOrDefaultAsync(x => x.Id == id);
+
+            return Ok(product);
+        }
     }
 }
