@@ -54,7 +54,7 @@ namespace API.Seed
                 var fakerProduct = new Faker<Product>()
                 .RuleFor(x => x.Name, p => p.Commerce.Product())
                 .RuleFor(x => x.Description, p => p.Commerce.ProductDescription())
-                .RuleFor(x => x.PictureUrl, p => p.Image.PlaceImgUrl())
+                .RuleFor(x => x.PictureUrl, p => $"/images/products/File {p.Random.Int(1, 18)}.png")
                 .RuleFor(x => x.Price, p => (long)p.Random.Decimal(5, 200))
                 .RuleFor(x => x.TypeId, p => p.PickRandom(idProductTypes))
                 .RuleFor(x => x.BrandId, p => p.PickRandom(idProductBrands))
