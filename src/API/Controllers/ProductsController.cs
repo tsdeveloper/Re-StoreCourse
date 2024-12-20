@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities.Products;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,20 +15,28 @@ namespace API.Controllers
     {
         private readonly RestoreCourseDbContext _context;
         private readonly ILogger<ProductsController> _logger;
+        private readonly IMapper _mapper;
 
-        public ProductsController(RestoreCourseDbContext context, ILogger<ProductsController> logger)
+        public ProductsController(RestoreCourseDbContext context,
+        ILogger<ProductsController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetProductAll()
         {
             _logger.LogInformation("GET LIST PRODUCT");
-            var productList = await _context.DbSet<Product>().ToListAsync();
+            var productList = await _context.DbSet<Product>()
+                                    .Include(x => x.Brand)
+                                    .Include(x => x.Type)
+                                    .ToListAsync();
 
-            return Ok(productList);
+            var returnResult = _mapper.Map<List<ProductReturnDTO>>(productList);
+
+            return Ok(returnResult);
         }
 
         [HttpGet("{id:int}")]
