@@ -25,6 +25,8 @@ public static class ApplicationServiceExtensions
             });            
         });
 
+        service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         return service;
 
     }
