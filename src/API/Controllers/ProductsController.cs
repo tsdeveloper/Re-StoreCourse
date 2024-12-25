@@ -43,7 +43,9 @@ namespace API.Controllers
         public async Task<IActionResult> GetProductById(int id)
         {
             _logger.LogInformation($"GET LIST PRODUCT BY ID {id}");
-            var product = await _context.DbSet<Product>().FirstOrDefaultAsync(x => x.Id == id);
+            var product = await _context.DbSet<Product>()
+                                    .Include(x => x.Brand)
+                                    .Include(x => x.Type).FirstOrDefaultAsync(x => x.Id == id);
 
             return Ok(product);
         }
