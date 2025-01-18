@@ -9,6 +9,5 @@ public class ProductBrandProfile : Profile
   public ProductBrandProfile()
   {
     CreateMap<ProductBrand, ProductBrandReturnDTO>();
-    
   }
 }

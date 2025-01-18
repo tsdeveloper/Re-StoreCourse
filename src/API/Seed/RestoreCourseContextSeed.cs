@@ -58,6 +58,7 @@ namespace API.Seed
                 .RuleFor(x => x.Price, p => (long)p.Random.Decimal(5, 200))
                 .RuleFor(x => x.TypeId, p => p.PickRandom(idProductTypes))
                 .RuleFor(x => x.BrandId, p => p.PickRandom(idProductBrands))
+                .RuleFor(x => x.QuantityInStock, p => p.Random.Int(1,150))
                 .Generate(20);
 
                 await context.AddRangeAsync(fakerProduct);

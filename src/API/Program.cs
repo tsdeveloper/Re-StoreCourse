@@ -1,6 +1,8 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Extensions;
+using API.Middleware;
 using API.Seed;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,16 +26,22 @@ try
     .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         })
     .AddNewtonsoftJson(options => {
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        // options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
+        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     });
+
     builder.Services.AddSerilog();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddApplicationServices(conf);
 
     var app = builder.Build();
+
+    app.UseMiddleware<ExceptionMiddleware>();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
