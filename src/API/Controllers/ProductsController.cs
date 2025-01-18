@@ -45,7 +45,10 @@ namespace API.Controllers
             _logger.LogInformation($"GET LIST PRODUCT BY ID {id}");
             var product = await _context.DbSet<Product>()
                                     .Include(x => x.Brand)
-                                    .Include(x => x.Type).FirstOrDefaultAsync(x => x.Id == id);
+                                    .Include(x => x.Type)
+                                    .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (product == null) return NotFound();
 
             return Ok(product);
         }
