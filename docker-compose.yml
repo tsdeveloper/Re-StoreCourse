@@ -10,14 +10,14 @@ services:
   #     - localdev    
   sql-server:
     container_name: sqlserver
-    image: mcr.microsoft.com/azure-sql-edge
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "1"
-      MSSQL_SA_PASSWORD: "senha@123"
+      MSSQL_SA_PASSWORD: "Senha@123"
     ports:
       - "1433:1433"
     volumes:
-      - sql-data:/var/opt/mssql
+      - sql-data:/opt/mssql
     networks:
       - localdev      
 
