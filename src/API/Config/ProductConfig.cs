@@ -18,6 +18,10 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
     b.HasOne(x => x.Brand).WithMany(o => o.ProductList).HasForeignKey(x => x.BrandId);
     b.Property(x => x.CreatedAt).HasDefaultValueSql("getdate()").IsRequired();
     b.Property(x => x.UpdateAt).IsRequired(false);
+    
+    b.HasMany(x => x.BasketItems)
+      .WithOne(x => x.Product)
+      .HasForeignKey(x => x.ProductId);
 
   }
 }

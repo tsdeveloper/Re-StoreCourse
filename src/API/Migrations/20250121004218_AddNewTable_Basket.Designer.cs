@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(RestoreCourseDbContext))]
-    partial class RestoreCourseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250121004218_AddNewTable_Basket")]
+    partial class AddNewTable_Basket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +35,7 @@ namespace API.Migrations
 
                     b.Property<string>("BuyerId")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()

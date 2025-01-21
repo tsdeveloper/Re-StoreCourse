@@ -1,3 +1,5 @@
+using API.Entities.Baskets;
+
 namespace API.Entities.Products;
 
 public class Product : BaseEntity
@@ -11,5 +13,6 @@ public class Product : BaseEntity
   public ProductType Type { get; set; }
   public ProductBrand Brand { get; set; }
   public int QuantityInStock { get; set; }
+  public ICollection<BasketItem> BasketItems { get; set; }
 }
 
