@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class BasketController : BaseApiController
+    public class BasketsController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
-        private readonly ILogger<BasketController> _logger;
+        private readonly ILogger<BasketsController> _logger;
         private readonly IMapper _mapper;
 
-        public BasketController(RestoreCourseDbContext context,
-            ILogger<BasketController> logger, IMapper mapper)
+        public BasketsController(RestoreCourseDbContext context,
+            ILogger<BasketsController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
@@ -27,15 +27,14 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetBasketAll()
+        public async Task<ActionResult<BasketReturnDTO>> GetBasketAll()
         {
-            _logger.LogInformation("GET LIST BASKET ALL");
-            var basketList = await _context.DbSet<Basket>()
-                .Include(x => x.BasketItems)
-                .ThenInclude(x => x.Product)
-                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+            _logger.LogInformation("GET BASKET");
+            var basket = await RetrieveBasket();
+            
+            if (basket == null) return NotFound();  
 
-            var returnResult = _mapper.Map<List<BasketReturnDTO>>(basketList);
+            var returnResult = _mapper.Map<BasketReturnDTO>(basket);
 
             return Ok(returnResult);
         }
