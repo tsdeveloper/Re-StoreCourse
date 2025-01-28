@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {   
-    public class ProductsController : BaseApiController
+    public class ProductController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
-        private readonly ILogger<ProductsController> _logger;
+        private readonly ILogger<ProductController> _logger;
         private readonly IMapper _mapper;
 
-        public ProductsController(RestoreCourseDbContext context,
-        ILogger<ProductsController> logger, IMapper mapper)
+        public ProductController(RestoreCourseDbContext context,
+        ILogger<ProductController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
