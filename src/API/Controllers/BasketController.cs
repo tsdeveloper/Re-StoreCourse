@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class BasketsController : BaseApiController
+    public class BasketController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
-        private readonly ILogger<BasketsController> _logger;
+        private readonly ILogger<BasketController> _logger;
         private readonly IMapper _mapper;
 
-        public BasketsController(RestoreCourseDbContext context,
-            ILogger<BasketsController> logger, IMapper mapper)
+        public BasketController(RestoreCourseDbContext context,
+            ILogger<BasketController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
