@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.AutoMapper;
 using API.Data;
 using API.DTOs;
 using API.Entities.Products;
@@ -50,7 +51,9 @@ namespace API.Controllers
 
             if (product == null) return NotFound();
 
-            return Ok(product);
+            ProductMapperDomain resultProductDto = product;
+
+            return Ok(resultProductDto.ProductReturnDto);
         }
     }
 }
