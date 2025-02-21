@@ -34,14 +34,28 @@ namespace API.Controllers
             
             if (basket == null) return NotFound();  
 
-            var returnResult = _mapper.Map<BasketReturnDTO>(basket);
+            var basketDto = BasketReturnDto(basket);
 
-            return Ok(returnResult);
+            return Ok(basketDto);
         }
        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<BasketReturnDTO>> GetBasketById(int id)
+        {
+            _logger.LogInformation($"GET BASKET BY ID {id}");
+            var basket = await _context.DbSet<Basket>()
+                .Include(x => x.BasketItems)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (basket == null) return NotFound();
+            
+            var basketDto = BasketReturnDto(basket);
+
+            return Ok(basketDto);
+        }
         
         [HttpPost]
-        public async Task<IActionResult> AddItemToBasket(int productId, int quantity)
+        public async Task<ActionResult<BasketReturnDTO>> AddItemToBasket(int productId, int quantity)
         {
             _logger.LogInformation("ADD BASKET");
             var basket = await RetrieveBasket();
@@ -58,11 +72,17 @@ namespace API.Controllers
             
             if (!resultBasketSave) return BadRequest( new ProblemDetails {Title = "Problem saving item to Basket"});
 
-            var basketDto = _mapper.Map<BasketReturnDTO>(basket);
+            var basketDto = BasketReturnDto(basket);
             return CreatedAtAction(nameof(GetBasketById), new { id = basketDto.Id }, basketDto);
         }
-       
-        private async Task<Basket?> RetrieveBasket()
+
+        private BasketReturnDTO BasketReturnDto(Basket basket)
+        {
+            var basketDto = _mapper.Map<BasketReturnDTO>(basket);
+            return basketDto;
+        }
+
+        private async Task<Basket> RetrieveBasket()
         {
             var basket = await _context.DbSet<Basket>()
                 .Include(x => x.BasketItems)
@@ -87,22 +107,23 @@ namespace API.Controllers
             return basket;
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetBasketById(int id)
-        {
-            _logger.LogInformation($"GET BASKET BY ID {id}");
-            var basket = await _context.DbSet<Basket>()
-                .Include(x => x.BasketItems)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (basket == null) return NotFound();
-
-            return Ok(basket);
-        }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveBasketItem(int productId, int quantity)
         {
+            var basket = await RetrieveBasket();
+            
+            if (basket == null) return NotFound();
+            
+            basket.RemoveItem(productId, quantity);
+            
+            var resultContext = await _context.SaveChangesAsync() > 0;   
+            
+            if (!resultContext) return BadRequest( new ProblemDetails
+            {
+                Title = "Problem removing item to Basket"
+            });
+            
             return NoContent();
         }
     }
