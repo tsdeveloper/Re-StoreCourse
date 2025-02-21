@@ -20,7 +20,7 @@ public class Basket : BaseEntity
         {
             BasketItems.Add(new BasketItem
             {
-                Product = product, 
+                Product = product,
                 Quantity = quantity
             });
         }
@@ -35,12 +35,15 @@ public class Basket : BaseEntity
         return BasketItems.FirstOrDefault(item => item.ProductId == productId);
     }
 
-    public void RemoveItem(Product product, int quantity)
+    public void RemoveItem(int productId, int quantity)
     {
-        var existingItem = BasketItems.FirstOrDefault(x => x.ProductId == product.Id);
+        var existingItem = BasketItems.FirstOrDefault(x => x.ProductId == productId);
         if (existingItem == null) return;
 
-        existingItem.Quantity -= quantity;
+        if (existingItem.Quantity > quantity && existingItem.Quantity > 0)
+            existingItem.Quantity -= quantity;
+        else 
+            existingItem.Quantity = 0;
 
         if (existingItem.Quantity == 0) BasketItems.Remove(existingItem);
     }
