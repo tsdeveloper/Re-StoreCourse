@@ -8,22 +8,23 @@ services:
   #     - "7001:8080" # Maps container port 5000 to host port 5000
   #   networks:
   #     - localdev    
-  sql-server:
-    container_name: sqlserver
-    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
     environment:
-      ACCEPT_EULA: "1"
-      MSSQL_SA_PASSWORD: "Senha@123"
+      - "ACCEPT_EULA=1"
+      - "MSSQL_SA_PASSWORD=Senha@123"
     ports:
       - "1433:1433"
+    hostname: mssql
+    container_name: mssql
     volumes:
-      - sql-data:/opt/mssql
-    networks:
-      - localdev      
+      - "mssql-azuresql-edge-data:/var/opt/mssql"
 
 volumes:
-  sql-data:      
-
+  mssql-azuresql-edge-data:
+    
 networks:
   localdev:
-    external: true
+    # Specify driver options
+    driver: bridge
