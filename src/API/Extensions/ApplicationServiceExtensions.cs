@@ -21,7 +21,7 @@ public static class ApplicationServiceExtensions
         service.AddCors(p => {
             p.AddPolicy("CorsPolicyAllowFront", o => 
             {   
-                o.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4000");
+                o.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4000");
             });            
         });
 
