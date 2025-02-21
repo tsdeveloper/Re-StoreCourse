@@ -4,5 +4,7 @@
 GET {{API_HostAddress}}/basket
 Accept: application/json
 Content-Type: application/json
+Cookie: buyerId=010b4dda-f23f-4001-ad77-7741734fbee6
 
 ###
+
