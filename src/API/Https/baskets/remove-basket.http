@@ -1,0 +1,10 @@
+@API_HostAddress = http://localhost:5000/api
+
+### POST BASKETS ADD ITEMS
+DELETE {{API_HostAddress}}/basket?productId=1&quantity=5
+Accept: application/json
+Content-Type: application/json
+Cookie: buyerId=010b4dda-f23f-4001-ad77-7741734fbee6
+
+
+###
