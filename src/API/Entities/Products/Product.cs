@@ -8,7 +8,7 @@ public class Product : BaseEntity
   public int BrandId { get; set; }
   public string Name { get; set; }
   public string Description { get; set; }
-  public long Price { get; set; }
+  public decimal Price { get; set; }
   public string PictureUrl { get; set; }
   public ProductType Type { get; set; }
   public ProductBrand Brand { get; set; }
