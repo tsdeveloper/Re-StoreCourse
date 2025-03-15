@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities.Baskets;
@@ -32,7 +28,7 @@ namespace API.Controllers
             _logger.LogInformation("GET BASKET");
             var basket = await RetrieveBasket();
             
-            if (basket == null) return NotFound();  
+            if (basket == null) return NoContent();  
 
             var basketDto = BasketReturnDto(basket);
 
