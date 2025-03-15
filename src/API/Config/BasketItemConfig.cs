@@ -1,5 +1,4 @@
 using API.Entities.Baskets;
-using API.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
