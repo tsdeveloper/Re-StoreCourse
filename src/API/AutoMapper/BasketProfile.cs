@@ -1,6 +1,5 @@
 using API.DTOs;
 using API.Entities.Baskets;
-using API.Entities.Products;
 using AutoMapper;
 
 namespace API.AutoMapper;
