@@ -2,6 +2,8 @@ using API.AutoMapper;
 using API.Data;
 using API.DTOs;
 using API.Entities.Products;
+using API.Helpers.Contexts;
+using API.Helpers.Products;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +25,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductAll()
+        public async Task<IActionResult> GetProductAll([FromQuery]string orderBy, string direction
+            , string? searchTerm,  string? brands, string? types)
         {
             _logger.LogInformation("GET LIST PRODUCT");
-            var productList = await _context.DbSet<Product>()
+            var query = _context.DbSet<Product>()
                                     .Include(x => x.Brand)
                                     .Include(x => x.Type)
-                                    .ToListAsync();
+                                    .Search(searchTerm)
+                                    .Filter(brands, types)
+                                    .AsQueryable();
 
-            var returnResult = _mapper.Map<List<ProductReturnDTO>>(productList);
+            query = query.OrderByCustom(orderBy, direction);
+            var returnResult = _mapper.Map<List<ProductReturnDTO>>(await query.ToListAsync());
 
             return Ok(returnResult);
         }
