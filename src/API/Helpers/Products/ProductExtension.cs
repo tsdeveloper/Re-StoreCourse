@@ -23,7 +23,7 @@ public static class ProductExtension
        if (!string.IsNullOrWhiteSpace(types))
            typeList.AddRange(types.ToLower().Split(',').ToList());
        
-       query = query.Where(p => brandList.Count == 0 || p.Brand.Name.Contains(p.Name));
+       query = query.Where(p => brandList.Count == 0 || p.Brand.Name.ToLower().Contains(p.Name));
        query = query.Where(p => typeList.Count == 0 || p.Type.Name.Contains(p.Name));
        
        return query;
