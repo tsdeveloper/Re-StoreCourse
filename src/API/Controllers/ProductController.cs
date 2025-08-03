@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {   
+    
     public class ProductController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
@@ -25,8 +26,8 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductAll([FromQuery]string orderBy, string direction
-            , string? searchTerm,  string? brands, string? types)
+        public async Task<IActionResult> GetProductAll([FromQuery]string? orderBy, string? direction, 
+            string? searchTerm,  string? brands, string? types)
         {
             _logger.LogInformation("GET LIST PRODUCT");
             var query = _context.DbSet<Product>()
@@ -35,10 +36,10 @@ namespace API.Controllers
                                     .Search(searchTerm)
                                     .Filter(brands, types)
                                     .AsQueryable();
-
+           
             query = query.OrderByCustom(orderBy, direction);
             var returnResult = _mapper.Map<List<ProductReturnDTO>>(await query.ToListAsync());
-
+            
             return Ok(returnResult);
         }
 
