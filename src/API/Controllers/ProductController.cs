@@ -2,14 +2,19 @@ using API.AutoMapper;
 using API.Data;
 using API.DTOs;
 using API.Entities.Products;
+using API.Extensions;
 using API.Helpers.Contexts;
 using API.Helpers.Products;
+using API.RequestsHelpers;
+using API.RequestsHelpers.Products;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {   
+    
     public class ProductController : BaseApiController
     {
         private readonly RestoreCourseDbContext _context;
@@ -25,21 +30,23 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductAll([FromQuery]string orderBy, string direction
-            , string? searchTerm,  string? brands, string? types)
+        public async Task<IActionResult> GetProductAll([FromQuery]ProductParams productParams)
         {
             _logger.LogInformation("GET LIST PRODUCT");
             var query = _context.DbSet<Product>()
-                                    .Include(x => x.Brand)
-                                    .Include(x => x.Type)
-                                    .Search(searchTerm)
-                                    .Filter(brands, types)
-                                    .AsQueryable();
-
-            query = query.OrderByCustom(orderBy, direction);
-            var returnResult = _mapper.Map<List<ProductReturnDTO>>(await query.ToListAsync());
-
-            return Ok(returnResult);
+                .OrderByCustom(productParams.OrderBy, productParams.Direction)
+                .Include(x => x.Brand)
+                .Include(x => x.Type)
+                .Search(productParams.SearchTherm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
+            
+            var productDtoList =  _mapper.Map<List<ProductReturnDTO>>(await query.ToListAsync());
+            var productPagination = await PagedList<ProductReturnDTO>
+                                                .ToPagedList(productDtoList, productParams.PageNumber, productParams.PagesSize);
+            
+            Response.AddPaginationHeader(productPagination.MetaData);
+            return Ok(productPagination);
         }
 
         [HttpGet("{id:int}")]
@@ -56,6 +63,18 @@ namespace API.Controllers
             ProductMapperDomain resultProductDto = product;
 
             return Ok(resultProductDto.ProductReturnDto);
+        }
+
+        [HttpGet("filters")]
+        public async Task<IActionResult> GetFilters()
+        {
+            var brands = await _context.DbSet<Product>()
+                    .Select(p => p.Brand.Name).Distinct().ToListAsync();
+            
+            var types = await _context.DbSet<Product>()
+                .Select(p => p.Type.Name).Distinct().ToListAsync();
+
+            return Ok(new { brands, types });
         }
     }
 }
