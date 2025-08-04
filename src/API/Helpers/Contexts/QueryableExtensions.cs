@@ -9,6 +9,9 @@ public static class QueryableExtensions
     // O método de extensão continua genérico, o que é a forma correta.
     public static IQueryable<T> OrderByCustom<T>(this IQueryable<T> query, string field, string direction)
     {
+        if (string.IsNullOrWhiteSpace(field))
+            return query;
+        
         var type = typeof(T);
         
         var propInfo = type.GetProperty(field, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
