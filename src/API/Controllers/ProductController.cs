@@ -37,7 +37,7 @@ namespace API.Controllers
                 .OrderByCustom(productParams.OrderBy, productParams.Direction)
                 .Include(x => x.Brand)
                 .Include(x => x.Type)
-                .Search(productParams.SearchTherm)
+                .Search(productParams.SearchTerm)
                 .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
             
