@@ -1,4 +1,6 @@
 using API.Data;
+using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -24,6 +26,13 @@ public static class ApplicationServiceExtensions
                     .AllowCredentials()
                 );
         });
+
+        service.AddIdentityCore<User>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<RestoreCourseDbContext>();
+
+        service.AddAuthentication();
+        service.AddAuthorization();
 
     service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return service;

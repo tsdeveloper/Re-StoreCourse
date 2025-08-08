@@ -1,16 +1,48 @@
 using API.Data;
+using API.Entities;
 using API.Entities.Products;
 using Bogus;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Seed
 {
     public class RestoreCourseContextSeed
     {
-        public static async Task SeedAsync(RestoreCourseDbContext context)
+        public static async Task SeedAsync(RestoreCourseDbContext context, UserManager<User> userManager)
         {
+            await SeedUserManager(userManager);
             await SeedProductType(context);
             await SeedProductBrand(context);
             await SeedProduct(context);
+        }
+        
+        private static async Task SeedUserManager(UserManager<User> userManager)
+        {
+            if (!userManager.Users.Any())
+            {
+                var user = new User
+                {
+                    UserName = "developer",
+                    Email = "developer@email.com"
+                };
+                
+                await CreateUserAndRole(userManager, user, "Senha@123", new []{"Member"});
+
+                var admin = new User
+                {
+                    UserName = "admin",
+                    Email = "admin@email.com"
+                };
+                
+                await CreateUserAndRole(userManager, user, "Senha@123", new []{"Admin", "Member"});
+
+            }
+        }
+
+        private static async Task CreateUserAndRole(UserManager<User> userManager, User user, string pwd, string[] role)
+        {
+            await userManager.CreateAsync(user, pwd);
+            await userManager.AddToRolesAsync(user, role);
         }
 
         private static async Task SeedProductType(RestoreCourseDbContext context)

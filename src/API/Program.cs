@@ -1,9 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
+using API.Entities;
 using API.Extensions;
 using API.Middleware;
 using API.Seed;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -58,10 +60,11 @@ try
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<RestoreCourseDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     await context.Database.MigrateAsync();
 
     if (true)
-        await RestoreCourseContextSeed.SeedAsync(context);
+        await RestoreCourseContextSeed.SeedAsync(context, userManager);
 
     app.Run();
 }

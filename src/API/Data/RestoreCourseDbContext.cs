@@ -1,9 +1,12 @@
 using System.Reflection;
+using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class RestoreCourseDbContext : DbContext
+public class RestoreCourseDbContext : IdentityDbContext<User>
 {
   public RestoreCourseDbContext(DbContextOptions<RestoreCourseDbContext> options)
   : base(options) { }
@@ -12,6 +15,14 @@ public class RestoreCourseDbContext : DbContext
   {
     base.OnModelCreating(b);
     b.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+    b.Entity<IdentityRole>()
+      .HasData(
+        new List<IdentityRole> {
+          new IdentityRole("Member"),
+        new IdentityRole("Admin"),
+        }
+      );
   }
 }
 
