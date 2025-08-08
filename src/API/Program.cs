@@ -50,11 +50,11 @@ try
         app.UseSwaggerUI();
     }
 
+    app.UseCors("CorsPolicyAllowFront");
     app.UseStaticFiles();
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
     app.MapControllers();
-    app.UseCors("CorsPolicyAllowFront");
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<RestoreCourseDbContext>();

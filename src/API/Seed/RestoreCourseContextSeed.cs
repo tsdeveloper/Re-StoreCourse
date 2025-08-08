@@ -30,9 +30,19 @@ namespace API.Seed
         {
             if (!context.DbSet<ProductBrand>().Any())
             {
-                
+                var listLanguages = new string[]
+                {
+                    ".NET",
+                    "Java",
+                    "PHP",
+                    "Redis",
+                    "SQL Server",
+                    "TypeScript",
+                    "ReactJS",
+
+                };
                 var fakerProductBrand = new Faker<ProductBrand>()
-                .RuleFor(x => x.Name, p => p.Commerce.Department())
+                .RuleFor(x => x.Name, p => p.PickRandom(listLanguages))
                 .Generate(5);
 
                 await context.AddRangeAsync(fakerProductBrand);
