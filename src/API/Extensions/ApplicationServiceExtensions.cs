@@ -8,22 +8,24 @@ public static class ApplicationServiceExtensions
     {
         var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
-        var connString = isDevelopment ? config.GetConnectionString("DEV-DOCKER-SQLSERVER") :
-                        config.GetConnectionString("PRD-DOCKER-SQLSERVER");
+        var connString = isDevelopment
+            ? config.GetConnectionString("DEV-DOCKER-SQLSERVER")
+            : config.GetConnectionString("PRD-DOCKER-SQLSERVER");
 
         service.AddDbContext<RestoreCourseDbContext>(x =>
-        x.UseSqlServer(connString));
+            x.UseSqlServer(connString));
 
-        service.AddCors(p => {
-            p.AddPolicy("CorsPolicyAllowFront", o => 
-            {   
-                o.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4000");
-            });            
+        service.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicyAllowFront",
+                builder => builder.WithOrigins("http://localhost:4000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                );
         });
 
-        service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+    service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return service;
-
     }
 }
