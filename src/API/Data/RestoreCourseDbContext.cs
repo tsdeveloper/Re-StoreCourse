@@ -1,12 +1,12 @@
 using System.Reflection;
-using API.Entities;
+using API.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class RestoreCourseDbContext : IdentityDbContext<User>
+public class RestoreCourseDbContext : IdentityDbContext<UserCustom, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
 {
   public RestoreCourseDbContext(DbContextOptions<RestoreCourseDbContext> options)
   : base(options) { }
@@ -16,13 +16,13 @@ public class RestoreCourseDbContext : IdentityDbContext<User>
     base.OnModelCreating(b);
     b.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-    b.Entity<IdentityRole>()
-      .HasData(
-        new List<IdentityRole> {
-          new IdentityRole("Member"),
-        new IdentityRole("Admin"),
-        }
-      );
+    // b.Entity<IdentityRole>()
+    //   .HasData(
+    //     new List<IdentityRole> {
+    //       new IdentityRole("Member"),
+    //     new IdentityRole("Admin"),
+    //     }
+    //   );
   }
 }
 
