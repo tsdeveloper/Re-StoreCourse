@@ -1,5 +1,5 @@
 using API.Data;
-using API.Entities;
+using API.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +27,8 @@ public static class ApplicationServiceExtensions
                 );
         });
 
-        service.AddIdentityCore<User>()
+        service.AddIdentityCore<UserCustom>()
+            .AddDefaultTokenProviders()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestoreCourseDbContext>();
 
