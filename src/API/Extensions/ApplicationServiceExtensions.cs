@@ -27,7 +27,10 @@ public static class ApplicationServiceExtensions
                 );
         });
 
-        service.AddIdentityCore<UserCustom>()
+        service.AddIdentityCore<UserCustom>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+            })
             .AddDefaultTokenProviders()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestoreCourseDbContext>();

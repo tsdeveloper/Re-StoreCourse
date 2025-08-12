@@ -36,6 +36,7 @@ try
         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     });
 
+    builder.Services.AddConfig(conf);
     builder.Services.AddSerilog();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
