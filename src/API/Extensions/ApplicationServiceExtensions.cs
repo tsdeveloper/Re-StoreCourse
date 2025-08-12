@@ -1,7 +1,12 @@
+using System.Text;
 using API.Data;
+using API.Entities;
 using API.Entities.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extensions;
 public static class ApplicationServiceExtensions
@@ -34,8 +39,22 @@ public static class ApplicationServiceExtensions
             .AddDefaultTokenProviders()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestoreCourseDbContext>();
+        
+        var jwtSettings = service.BuildServiceProvider().GetService<IOptions<JWTSettings>>();
 
-        service.AddAuthentication();
+        service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Value.TokenKey))
+                };
+            });
+        
         service.AddAuthorization();
 
     service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
