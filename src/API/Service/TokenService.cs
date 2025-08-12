@@ -42,7 +42,8 @@ public class TokenService
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: new DateTime().AddMinutes(_jwtSettings.Expire)
+            expires: DateTime.Now.AddDays(7),
+            signingCredentials: creds
             );
 
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
