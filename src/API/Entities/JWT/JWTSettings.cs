@@ -1,4 +1,4 @@
-namespace API.Entities;
+namespace API.Entities.JWT;
 
 public class JWTSettings
 {

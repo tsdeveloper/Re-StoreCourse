@@ -26,7 +26,7 @@ namespace API.Controllers
         public async Task<ActionResult<BasketReturnDTO>> GetBasketAll()
         {
             _logger.LogInformation("GET BASKET");
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetBuyerId());
 
             if (basket == null) return NoContent();
 
@@ -54,7 +54,7 @@ namespace API.Controllers
         public async Task<ActionResult<BasketReturnDTO>> AddItemToBasket(int productId, int quantity)
         {
             _logger.LogInformation("ADD BASKET");
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetBuyerId());
 
             if (basket == null) basket = CreateBasket();
 
@@ -78,25 +78,42 @@ namespace API.Controllers
             return basketDto;
         }
 
-        private async Task<Basket> RetrieveBasket()
+        private async Task<Basket> RetrieveBasket(string buyerId)
         {
+            if (string.IsNullOrWhiteSpace(buyerId))
+            {
+                Response.Cookies.Delete("BasketId");
+                return null;
+            }
+            
             var basket = await _context.DbSet<Basket>()
                 .Include(x => x.BasketItems)
                 .ThenInclude(x => x.Product)
-                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+                .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
             return basket;
+        }
+
+        private string GetBuyerId()
+        {
+            return User.Identity?.Name ?? Request.Cookies["BasketId"];
         }
 
         private Basket CreateBasket()
         {
-            var buyerId = Guid.NewGuid().ToString();
-            var cookieOptions = new CookieOptions
-            {
-                IsEssential = true,
-                Expires = DateTimeOffset.UtcNow.AddDays(30)
-            };
+            var buyerId = User.Identity?.Name;
 
-            Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            if (string.IsNullOrWhiteSpace(buyerId))
+            {
+                buyerId = Guid.NewGuid().ToString();
+                var cookieOptions = new CookieOptions
+                {
+                    IsEssential = true,
+                    Expires = DateTimeOffset.UtcNow.AddDays(30)
+                };
+
+                Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            }
+           
             var basket = new Basket { BuyerId = buyerId };
             _context.DbSet<Basket>().Add(basket);
 
@@ -107,7 +124,7 @@ namespace API.Controllers
         [HttpDelete]
         public async Task<IActionResult> RemoveBasketItem(int productId, int quantity)
         {
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetBuyerId());
 
             if (basket == null) return NotFound();
 
