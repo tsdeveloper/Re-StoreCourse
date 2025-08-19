@@ -1,10 +1,17 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
+using API.Entities;
+using API.Entities.Users;
 using API.Extensions;
 using API.Middleware;
 using API.Seed;
+using API.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
@@ -17,6 +24,9 @@ try
                 .CreateLogger();
 
     Log.Information("Starting up");
+    
+    builder.Services.AddConfig(builder.Configuration);
+    
     var serviceProvider = builder.Services.BuildServiceProvider();
     var conf = serviceProvider.GetRequiredService<IConfiguration>();
 
@@ -34,23 +44,55 @@ try
         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     });
 
+    
     builder.Services.AddSerilog();
+    builder.Services.AddScoped<TokenService>();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(c =>
+    {
+        var jwtSecurityScheme = new OpenApiSecurityScheme
+        {
+            BearerFormat = "JWT",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = JwtBearerDefaults.AuthenticationScheme,
+            Description = "Put Bearer + your token in the box below",
+            Reference = new OpenApiReference
+            {
+                Id = JwtBearerDefaults.AuthenticationScheme,
+                Type = ReferenceType.SecurityScheme
+            }
+        };
+        
+        c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                jwtSecurityScheme, Array.Empty<string>()
+            }
+        });
+    });
+    
     builder.Services.AddApplicationServices(conf);
 
     var app = builder.Build();
-
+    
     app.UseMiddleware<ExceptionMiddleware>();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
+        });
     }
 
     app.UseCors("CorsPolicyAllowFront");
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.UseStaticFiles();
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
@@ -58,10 +100,12 @@ try
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<RestoreCourseDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserCustom>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     await context.Database.MigrateAsync();
 
     if (true)
-        await RestoreCourseContextSeed.SeedAsync(context);
+        await RestoreCourseContextSeed.SeedAsync(context, userManager, roleManager);
 
     app.Run();
 }
