@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(RestoreCourseDbContext))]
-    partial class RestoreCourseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250809042418_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,44 +83,6 @@ namespace API.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("BasketItem");
-                });
-
-            modelBuilder.Entity("API.Entities.JWT.JWTRefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<DateTime>("ExpiredAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRevoked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("JWTRefreshToken");
                 });
 
             modelBuilder.Entity("API.Entities.Products.Product", b =>
@@ -440,17 +405,6 @@ namespace API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("API.Entities.JWT.JWTRefreshToken", b =>
-                {
-                    b.HasOne("API.Entities.Users.UserCustom", "User")
-                        .WithMany("RefreshTokenList")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("API.Entities.Products.Product", b =>
                 {
                     b.HasOne("API.Entities.Products.ProductBrand", "Brand")
@@ -539,11 +493,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Products.ProductType", b =>
                 {
                     b.Navigation("ProductList");
-                });
-
-            modelBuilder.Entity("API.Entities.Users.UserCustom", b =>
-                {
-                    b.Navigation("RefreshTokenList");
                 });
 #pragma warning restore 612, 618
         }

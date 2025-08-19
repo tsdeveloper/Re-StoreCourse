@@ -1,3 +1,5 @@
+using API.Entities.Baskets;
+
 namespace API.DTOs;
 
 public class BasketItemReturnDto
@@ -9,4 +11,18 @@ public class BasketItemReturnDto
     public string Name { get; set; }
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
+
+    public static explicit operator BasketItemReturnDto(BasketItem entity)
+    {
+        return new BasketItemReturnDto
+        {
+            Id = entity.Id,
+            Quantity = entity.Quantity,
+            ProductId = entity.ProductId,
+            BasketId = entity.BasketId,
+            Name = entity.Product.Name,
+            PictureUrl = entity.Product.PictureUrl,
+            Price = entity.Product.Price,
+        };
+    }
 }
