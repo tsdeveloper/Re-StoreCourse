@@ -1,9 +1,13 @@
+using API.Data;
 using API.DTOs;
+using API.Entities.Baskets;
+using API.Entities.JWT;
 using API.Entities.Users;
 using API.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
@@ -11,11 +15,14 @@ public class AccountController : BaseApiController
 {
    private readonly UserManager<UserCustom> _userManager;
    private readonly TokenService _serviceToken;
+   private readonly RestoreCourseDbContext _context;
 
-   public AccountController(UserManager<UserCustom> userManager, TokenService serviceToken)
+   public AccountController(UserManager<UserCustom> userManager, TokenService serviceToken,
+      RestoreCourseDbContext context)
    {
       _userManager = userManager;
       _serviceToken = serviceToken;
+      _context = context;
    }
 
    [HttpPost("login")]
@@ -25,11 +32,41 @@ public class AccountController : BaseApiController
       if (user == null || !await _userManager.CheckPasswordAsync(user, login.Password))
          return Unauthorized();
 
+      var userBasket = await RetrieveBasket(login.Username);
+      var anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);
+
+      if (anonBasket != null)
+      {
+         if (userBasket != null) _context.DbSet<Basket>().Remove(userBasket);
+
+         anonBasket.BuyerId = user.UserName;
+         Response.Cookies.Delete("buyerId");
+         await _context.SaveChangesAsync();
+      }
+      
       return new UserLoginDto
       {
          Email = user.Email,
-         Token = await _serviceToken.GenerateToke(user)
+         Token = await _serviceToken.GenerateToke(user),
+         RefreshToken = await _serviceToken.GenerateRefreshToken(user.Id),
+         Basket = anonBasket != null ? (BasketReturnDTO)anonBasket : (BasketReturnDTO)userBasket
       };
+   }
+   
+   private async Task<Basket> RetrieveBasket(string buyerId)
+   {
+      if (string.IsNullOrWhiteSpace(buyerId))
+      {
+         Response.Cookies.Delete("BasketId");
+         return null;
+      }
+            
+      var basket = await _context.DbSet<Basket>()
+         .Include(x => x.BasketItems)
+         .ThenInclude(x => x.Product)
+         .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
+      
+      return basket;
    }
 
    [HttpPost("register")]
@@ -64,6 +101,34 @@ public class AccountController : BaseApiController
       {
          Email = user.Email,
          Token = await _serviceToken.GenerateToke(user)
+      };
+   }
+
+   [HttpPost("refresh")]
+   public async Task<ActionResult<UserLoginDto>> RefreshToken([FromBody] JWTRefreshTokenDto dto)
+   {
+      var existingRefreshToken = await _context.DbSet<JWTRefreshToken>()
+         .SingleOrDefaultAsync(rt => rt.Token == dto.RefreshToken);
+
+      if (existingRefreshToken == null || existingRefreshToken.IsRevoked)
+         return Unauthorized("Refresh token is invalid");
+
+
+      if (existingRefreshToken.ExpiredAt < DateTime.UtcNow)
+      {
+         await _serviceToken.RevokeRefreshToken(existingRefreshToken.Token);
+         return Unauthorized("Refresh token is expired");
+      }
+      
+      await _serviceToken.RevokeRefreshToken(existingRefreshToken.Token);
+      
+      var user = await _userManager.FindByIdAsync(existingRefreshToken.UserId);
+      
+      return new UserLoginDto
+      {
+         Email = user.Email,
+         Token = await _serviceToken.GenerateToke(user),
+         RefreshToken = await _serviceToken.GenerateRefreshToken(user.Id)
       };
    }
 
