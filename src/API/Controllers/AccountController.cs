@@ -96,11 +96,13 @@ public class AccountController : BaseApiController
    public async Task<ActionResult<UserLoginDto>> GetCurrentUser()
    {
       var user = await _userManager.FindByNameAsync(User.Identity.Name);
-
+      var userBasket = await RetrieveBasket(user.UserName);
+      
       return new UserLoginDto
       {
          Email = user.Email,
-         Token = await _serviceToken.GenerateToke(user)
+         Token = await _serviceToken.GenerateToke(user),
+         Basket = userBasket != null ? (BasketReturnDTO)userBasket : null
       };
    }
 
