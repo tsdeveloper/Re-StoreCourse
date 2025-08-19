@@ -10,6 +10,8 @@ public class BasketReturnDTO
 
     public static explicit operator BasketReturnDTO(Basket entity)
     {
+        if (entity == null) return null;
+        
         var dto = new  BasketReturnDTO
         {
             Id = entity.Id,
