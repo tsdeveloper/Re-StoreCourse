@@ -1,4 +1,6 @@
-namespace API.DTOs;
+using API.DTOs.Baskets;
+
+namespace API.DTOs.UserLogins;
 
 public class UserLoginDto
 {

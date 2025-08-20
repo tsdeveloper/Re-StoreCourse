@@ -1,5 +1,10 @@
 using API.Data;
 using API.DTOs;
+using API.DTOs.Baskets;
+using API.DTOs.JWTRefreshTokens;
+using API.DTOs.Logins;
+using API.DTOs.Registers;
+using API.DTOs.UserLogins;
 using API.Entities.Baskets;
 using API.Entities.JWT;
 using API.Entities.Users;
@@ -124,7 +129,7 @@ public class AccountController : BaseApiController
       
       await _serviceToken.RevokeRefreshToken(existingRefreshToken.Token);
       
-      var user = await _userManager.FindByIdAsync(existingRefreshToken.UserId);
+      var user = await _userManager.FindByIdAsync(existingRefreshToken.UserId.ToString());
       
       return new UserLoginDto
       {

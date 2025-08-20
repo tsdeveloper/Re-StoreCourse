@@ -1,6 +1,6 @@
 using API.Entities.Baskets;
 
-namespace API.DTOs;
+namespace API.DTOs.BasketItems;
 
 public class BasketItemReturnDto
 {

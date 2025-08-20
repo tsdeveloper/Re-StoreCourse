@@ -1,4 +1,7 @@
-namespace API.DTOs;
+using API.DTOs.ProductBrands;
+using API.DTOs.ProductTypes;
+
+namespace API.DTOs.Products;
 
 public class ProductReturnDTO
 {

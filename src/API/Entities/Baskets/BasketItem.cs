@@ -2,7 +2,7 @@ using API.Entities.Products;
 
 namespace API.Entities.Baskets;
 
-public class BasketItem : BaseEntity    
+public class  BasketItem : BaseEntity    
 {
     public int Quantity { get; set; }
     public int ProductId { get; set; }

@@ -1,6 +1,7 @@
 using API.AutoMapper;
 using API.Data;
 using API.DTOs;
+using API.DTOs.Products;
 using API.Entities.Products;
 using API.Extensions;
 using API.Helpers.Contexts;

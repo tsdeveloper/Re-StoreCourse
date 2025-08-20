@@ -2,6 +2,7 @@ using System.Text;
 using API.Data;
 using API.Entities;
 using API.Entities.JWT;
+using API.Entities.Roles;
 using API.Entities.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ public static class ApplicationServiceExtensions
                 opt.User.RequireUniqueEmail = true;
             })
             .AddDefaultTokenProviders()
-            .AddRoles<IdentityRole>()
+            .AddRoles<RoleCustom>()
             .AddEntityFrameworkStores<RestoreCourseDbContext>();
         
         var jwtSettings = service.BuildServiceProvider().GetService<IOptions<JWTSettings>>();

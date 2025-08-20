@@ -1,6 +1,7 @@
 using API.Data;
 using API.Entities;
 using API.Entities.Products;
+using API.Entities.Roles;
 using API.Entities.Users;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ namespace API.Seed
     public class RestoreCourseContextSeed
     {
         public static async Task SeedAsync(RestoreCourseDbContext context, UserManager<UserCustom> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<RoleCustom> roleManager)
         {
             await SeedIdentityRoleManager(roleManager);
             await SeedUserManager(userManager);
@@ -19,12 +20,12 @@ namespace API.Seed
             await SeedProduct(context);
         }
 
-        private static async Task SeedIdentityRoleManager(RoleManager<IdentityRole> roleManager)
+        private static async Task SeedIdentityRoleManager(RoleManager<RoleCustom> roleManager)
         {
             if (!roleManager.Roles.Any(x => x.Name == "Admin" || x.Name == "Member"))
             {
-                await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
-                await roleManager.CreateAsync(new IdentityRole { Name = "Member" });
+                await roleManager.CreateAsync(new RoleCustom { Name = "Admin" });
+                await roleManager.CreateAsync(new RoleCustom { Name = "Member" });
             }
         }
 
