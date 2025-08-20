@@ -55,7 +55,7 @@ public class TokenService
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
     }
 
-    public async Task<string> GenerateRefreshToken(string userId)
+    public async Task<string> GenerateRefreshToken(int userId)
     {
         var refreshToken = new JWTRefreshToken
         {

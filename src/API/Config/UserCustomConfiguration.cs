@@ -44,21 +44,26 @@ public class UserCustomConfiguration : IEntityTypeConfiguration<UserCustom>
         // Exemplo: builder.HasMany(u => u.Pedidos).WithOne(p => p.Usuario).HasForeignKey(p => p.UsuarioId);
 
         // Configura o relacionamento do Identity com Roles
-        builder.HasMany<IdentityUserRole<string>>()
+        builder.HasMany<IdentityUserRole<int>>()
             .WithOne()
             .HasForeignKey(ur =>  ur.UserId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         // Configura o relacionamento do Identity com Logins
-        builder.HasMany<IdentityUserLogin<string>>()
+        builder.HasMany<IdentityUserLogin<int>>()
             .WithOne()
             .HasForeignKey(ul => ul.UserId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Configura o relacionamento do Identity com Claims
-        builder.HasMany<IdentityUserClaim<string>>()
+        builder.HasMany<IdentityUserClaim<int>>()
             .WithOne()
             .HasForeignKey(uc => uc.UserId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+        
+       
     }
 }

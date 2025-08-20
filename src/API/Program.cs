@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Entities;
+using API.Entities.Roles;
 using API.Entities.Users;
 using API.Extensions;
 using API.Middleware;
@@ -44,7 +45,6 @@ try
         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     });
 
-    
     builder.Services.AddSerilog();
     builder.Services.AddScoped<TokenService>();
     builder.Services.AddEndpointsApiExplorer();
@@ -101,7 +101,7 @@ try
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<RestoreCourseDbContext>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserCustom>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleCustom>>();
     await context.Database.MigrateAsync();
 
     if (true)
