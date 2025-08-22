@@ -1,4 +1,7 @@
 using API.DTOs;
+using API.DTOs.ProductBrands;
+using API.DTOs.Products;
+using API.DTOs.ProductTypes;
 using API.Entities.Products;
 
 namespace API.AutoMapper;

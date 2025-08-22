@@ -29,4 +29,38 @@
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Entities\Users\._UserAddress.cs" />
+    <Compile Remove="Entities\Roles\._RoleCustom.cs" />
+    <Compile Remove="Entities\Aggregate\._ProductItemOrdered.cs" />
+    <Compile Remove="Entities\Addresses\._Address.cs" />
+    <Compile Remove="DTOs\ShippingAddresses\._ShippingAddressDto.cs" />
+    <Compile Remove="DTOs\Products\._ProductItemOrderedDto.cs" />
+    <Compile Remove="DTOs\Orders\._OrderDto.cs" />
+    <Compile Remove="DTOs\Logins\._LoginDto.cs" />
+    <Compile Remove="DTOs\JWTRefreshTokens\._JWTRefreshTokenDto.cs" />
+    <Compile Remove="DTOs\BasketItems\._BasketItemDto.cs" />
+    <Compile Remove="DTOs\Addresses\._AddressDto.cs" />
+    <Compile Remove="Config\._RoleCustomConfig.cs" />
+    <Compile Remove="Config\._ProductTypeConfig.cs" />
+    <Compile Remove="Config\._ProductConfig.cs" />
+    <Compile Remove="Config\._ProductBrandConfig.cs" />
+    <Compile Remove="Config\._OrderConfig.cs" />
+    <Compile Remove="Config\._JWTRefreshTokenConfig.cs" />
+    <Compile Remove="Config\._BasketItemConfig.cs" />
+    <Compile Remove="Config\._BasketConfig.cs" />
+    <Compile Remove="AutoMapper\._ProductTypeProfile.cs" />
+    <Compile Remove="AutoMapper\._ProductMapperDomain.cs" />
+    <Compile Remove="AutoMapper\._ProductBrandProfile.cs" />
+    <Compile Remove="AutoMapper\._BasketProfile.cs" />
+    <Compile Remove="DTOs\Products\._ProductDTO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Entities\._Users" />
+    <None Remove="Entities\._Roles" />
+    <None Remove="Entities\._Products" />
+    <None Remove="Entities\._JWT" />
+    <None Remove="Entities\._Baskets" />
+    <None Remove="Entities\._Aggregate" />
+  </ItemGroup>
 </Project>

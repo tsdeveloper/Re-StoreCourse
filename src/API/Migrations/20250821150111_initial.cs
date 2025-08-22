@@ -59,8 +59,8 @@ namespace API.Migrations
                     ShippingAddress_Zip = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShippingAddress_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SubTotal = table.Column<long>(type: "bigint", nullable: false),
-                    DeliveryFee = table.Column<long>(type: "bigint", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DeliveryFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Pending")
                 },
                 constraints: table =>
@@ -154,7 +154,7 @@ namespace API.Migrations
                     ItemOrdered_ProductId = table.Column<int>(type: "int", nullable: false),
                     ItemOrdered_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemOrdered_PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<long>(type: "bigint", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },

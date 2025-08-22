@@ -9,8 +9,8 @@ public class Order
     public ShippingAddress ShippingAddress { get; set; }
     public DateTime OrderDate { get; set; } = DateTime.Now;
     public List<OrderItem> OrderItems { get; set; } = new();
-    public long SubTotal { get; set; }
-    public long DeliveryFee { get; set; }
+    public decimal SubTotal { get; set; }
+    public decimal DeliveryFee { get; set; }
     public OrderStatus OrderStatus { get; set; }
     
 }

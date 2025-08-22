@@ -83,7 +83,7 @@ namespace API.Controllers
         {
             if (string.IsNullOrWhiteSpace(buyerId))
             {
-                Response.Cookies.Delete("BasketId");
+                Response.Cookies.Delete("buyerId");
                 return null;
             }
             
@@ -96,7 +96,7 @@ namespace API.Controllers
 
         private string GetBuyerId()
         {
-            return User.Identity?.Name ?? Request.Cookies["BasketId"];
+            return User.Identity?.Name ?? Request.Cookies["buyerId"];
         }
 
         private Basket CreateBasket()
