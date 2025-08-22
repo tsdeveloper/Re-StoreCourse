@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.DTOs.ProductTypes;
 using API.Entities.Products;
 using AutoMapper;
 

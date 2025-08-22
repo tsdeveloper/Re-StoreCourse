@@ -1,4 +1,6 @@
 using API.DTOs;
+using API.DTOs.BasketItems;
+using API.DTOs.Baskets;
 using API.Entities.Baskets;
 using AutoMapper;
 

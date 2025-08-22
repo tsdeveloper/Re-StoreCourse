@@ -12,11 +12,11 @@ public class OrderDto
     public ShippingAddressDto ShippingAddress { get; set; }
     public DateTime OrderDate { get; set; } = DateTime.Now;
     public List<OrderItemDto> OrderItems { get; set; } = new();
-    public long SubTotal { get; set; }
-    public long DeliveryFee { get; set; }
-    public OrderStatus OrderStatus { get; set; }
+    public decimal SubTotal { get; set; }
+    public decimal DeliveryFee { get; set; }
+    public string OrderStatus { get; set; }
 
-    public long GetTotal()
+    public decimal GetTotal()
     {
         return SubTotal + DeliveryFee;
     }
@@ -31,7 +31,7 @@ public class OrderDto
             OrderItems = entity.OrderItems.Select(x => (OrderItemDto)x).ToList(),
             SubTotal = entity.SubTotal,
             DeliveryFee = entity.DeliveryFee,
-            OrderStatus = entity.OrderStatus,
+            OrderStatus = entity.OrderStatus.ToString(),
         };
     }
 
@@ -40,8 +40,10 @@ public class OrderDto
 public class OrderItemDto
 {
     public int Id { get; set; }
-    public ProductItemOrderedDto ItemOrdered { get; set; }
-    public long Price { get; set; }
+    public int ProductId { get; set; }
+    public string Name { get; set; }
+    public string PictureUrl { get; set; }
+    public decimal Price { get; set; }
     public int Quantity { get; set; }
 
     public static explicit operator OrderItemDto(OrderItem entity)
@@ -49,9 +51,17 @@ public class OrderItemDto
         return new OrderItemDto
         {
             Id = entity.Id,
-            ItemOrdered = (ProductItemOrderedDto)entity.ItemOrdered,
+            ProductId = entity.ItemOrdered.ProductId,
+            Name = entity.ItemOrdered.Name,
+            PictureUrl = entity.ItemOrdered.PictureUrl,
             Price = entity.Price,
             Quantity = entity.Quantity,
         };
     }
+}
+
+public class CreateOrderDto
+{
+    public bool SaveAddress { get; set; }
+    public ShippingAddress ShippingAddress { get; set; }
 }
