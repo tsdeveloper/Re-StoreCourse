@@ -54,6 +54,12 @@
     <Compile Remove="AutoMapper\._ProductBrandProfile.cs" />
     <Compile Remove="AutoMapper\._BasketProfile.cs" />
     <Compile Remove="DTOs\Products\._ProductDTO.cs" />
+    <Compile Remove="Helpers\Products\._ProductExtension.cs" />
+    <Compile Remove="DTOs\Registers\._RegisterDto.cs" />
+    <Compile Remove="DTOs\ProductTypes\._ProductTypeDTO.cs" />
+    <Compile Remove="DTOs\ProductBrands\._ProductBrandDTO.cs" />
+    <Compile Remove="Controllers\._ProductController.cs" />
+    <Compile Remove="Controllers\._OrdersController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\._Users" />
@@ -62,5 +68,12 @@
     <None Remove="Entities\._JWT" />
     <None Remove="Entities\._Baskets" />
     <None Remove="Entities\._Aggregate" />
+    <None Remove="Https\baskets\._get-basket.http" />
+    <None Remove="Https\._products" />
+    <None Remove="Https\._baskets" />
+    <None Remove="DTOs\._UserLogins" />
+    <None Remove="DTOs\._ShippingAddresses" />
+    <None Remove="DTOs\._Registers" />
+    <None Remove="._Service" />
   </ItemGroup>
 </Project>
