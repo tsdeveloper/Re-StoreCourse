@@ -1,5 +1,6 @@
 using API.Data;
 using API.DTOs.Orders;
+using API.Entities.Addresses;
 using API.Entities.Aggregate;
 using API.Entities.Baskets;
 using API.Entities.Products;
@@ -10,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class OrdersController : BaseApiController
+public class OrderController : BaseApiController
 {
    private readonly RestoreCourseDbContext _context;
 
-   public OrdersController(RestoreCourseDbContext context)
+   public OrderController(RestoreCourseDbContext context)
    {
       _context = context;
    }
@@ -83,7 +84,7 @@ public class OrdersController : BaseApiController
       {
          BuyerId = User.Identity.Name,
          OrderItems = items,
-         ShippingAddress = orderDto.ShippingAddress,
+         ShippingAddress = (ShippingAddress)orderDto.ShippingAddress,
          SubTotal = subTotal,
          DeliveryFee = devileryFee,
       };
