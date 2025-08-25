@@ -110,6 +110,18 @@ public class AccountController : BaseApiController
          Basket = userBasket != null ? (BasketReturnDTO)userBasket : null
       };
    }
+   
+   [Authorize]
+   [HttpGet("saveAddress")]
+   public async Task<ActionResult<UserLoginDto>> GetSavedAddress()
+   {
+      return new UserAddressDto
+      {
+         Email = user.Email,
+         Token = await _serviceToken.GenerateToke(user),
+         Basket = userBasket != null ? (BasketReturnDTO)userBasket : null
+      };
+   }
 
    [HttpPost("refresh")]
    public async Task<ActionResult<UserLoginDto>> RefreshToken([FromBody] JWTRefreshTokenDto dto)
