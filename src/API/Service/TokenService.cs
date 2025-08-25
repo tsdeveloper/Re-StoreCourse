@@ -48,7 +48,7 @@ public class TokenService
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.Now.AddMinutes(_jwtSettings.Expire),
+            expires: DateTime.Now.AddMinutes(_jwtSettings.ExpireMinute),
             signingCredentials: creds
         );
 
@@ -61,7 +61,7 @@ public class TokenService
         {
             Token = Guid.NewGuid().ToString("N"),
             CreatedAt = DateTime.Now,
-            ExpiredAt = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpireRefreshToken),
+            ExpiredAt = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpireRefreshTokenMinute),
             UserId = userId
         };
         _context.DbSet<JWTRefreshToken>().Add(refreshToken);
