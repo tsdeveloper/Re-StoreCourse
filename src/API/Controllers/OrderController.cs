@@ -3,6 +3,7 @@ using API.DTOs.Orders;
 using API.Entities.Addresses;
 using API.Entities.Aggregate;
 using API.Entities.Baskets;
+using API.Entities.Enum;
 using API.Entities.Products;
 using API.Entities.Users;
 using API.Extensions.Baskets;
@@ -26,6 +27,10 @@ public class OrderController : BaseApiController
       var orders =  await _context.DbSet<Order>()
          .Include(o => o.OrderItems)
          .Where(x => x.BuyerId == User.Identity.Name)
+         .OrderBy(s => 
+            s.OrderStatus == OrderStatus.PaymentReceived ? 0 :
+               s.OrderStatus == OrderStatus.Pending ? 1 : 2)
+         .ThenByDescending(x => x.OrderDate)
          .ToListAsync();
 
       var orderDtoList = orders.Select(x => (OrderDto)x).ToList();
@@ -95,9 +100,10 @@ public class OrderController : BaseApiController
       if (orderDto.SaveAddress)
       {
          var user = await _context.DbSet<UserCustom>()
+            .Include(a => a.Address)
             .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
-
-         user.Address = new UserAddress
+      
+         var address = new UserAddress
          {
             FullName = order.ShippingAddress.FullName,
             Address1 = order.ShippingAddress.Address1,
@@ -108,7 +114,7 @@ public class OrderController : BaseApiController
             Country = order.ShippingAddress.Country,
          };
          
-         _context.Update(user);
+         user.Address = address;
       }
       
       var result = await _context.SaveChangesAsync() > 0;

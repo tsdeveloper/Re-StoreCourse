@@ -6,4 +6,5 @@ public class UserAddress : Address
 {
     public int UserId { get; set; }
     public UserCustom User { get; set; }
+    
 }

@@ -10,7 +10,7 @@ public class OrderDto
     public int Id { get; set; }
     public string BuyerId { get; set; }
     public ShippingAddressDto ShippingAddress { get; set; }
-    public DateTime OrderDate { get; set; } = DateTime.Now;
+    public string OrderDate { get; set; }
     public List<OrderItemDto> OrderItems { get; set; } = new();
     public decimal SubTotal { get; set; }
     public decimal DeliveryFee { get; set; }
@@ -25,9 +25,10 @@ public class OrderDto
     {
         return new OrderDto
         {
+            Id = entity.Id,
             BuyerId = entity.BuyerId,
             ShippingAddress = (ShippingAddressDto)entity.ShippingAddress,
-            OrderDate = entity.OrderDate,
+            OrderDate = entity.OrderDate.ToString("yyyy-MM-dd hh:mm:ss"),
             OrderItems = entity.OrderItems.Select(x => (OrderItemDto)x).ToList(),
             SubTotal = entity.SubTotal,
             DeliveryFee = entity.DeliveryFee,
