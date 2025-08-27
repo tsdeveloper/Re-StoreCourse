@@ -1,10 +1,10 @@
 using API.Data;
-using API.DTOs;
+using API.DTOs.Addresses;
 using API.DTOs.Baskets;
 using API.DTOs.JWTRefreshTokens;
 using API.DTOs.Logins;
 using API.DTOs.Registers;
-using API.DTOs.UserLogins;
+using API.DTOs.Users;
 using API.Entities.Baskets;
 using API.Entities.JWT;
 using API.Entities.Users;
@@ -113,14 +113,18 @@ public class AccountController : BaseApiController
    
    [Authorize]
    [HttpGet("saveAddress")]
-   public async Task<ActionResult<UserLoginDto>> GetSavedAddress()
+   public async Task<ActionResult<AddressDto>> GetSavedAddress()
    {
-      return new UserAddressDto
-      {
-         Email = user.Email,
-         Token = await _serviceToken.GenerateToke(user),
-         Basket = userBasket != null ? (BasketReturnDTO)userBasket : null
-      };
+      var userWithAddress = await _userManager.Users
+         .Where(x  => x.UserName == User.Identity.Name)
+         .Select(x =>  x.Address)
+         .FirstOrDefaultAsync();
+      
+      if (userWithAddress == null) return BadRequest(new ProblemDetails { Title = "Could not locate address"});
+      
+      var userWithAddressDto = (AddressDto)userWithAddress;
+
+      return userWithAddressDto;
    }
 
    [HttpPost("refresh")]

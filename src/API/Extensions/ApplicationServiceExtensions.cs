@@ -59,7 +59,7 @@ public static class ApplicationServiceExtensions
         
         service.AddAuthorization();
 
-    service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    service.AddAutoMapper(typeof(Program));
         return service;
     }
 }
