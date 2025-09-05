@@ -24,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BasketReturnDTO>> GetBasketAll()
+        public async Task<ActionResult<BasketDTO>> GetBasketAll()
         {
             _logger.LogInformation("GET BASKET");
             var basket = await RetrieveBasket(GetBuyerId());
@@ -37,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<BasketReturnDTO>> GetBasketById(int id)
+        public async Task<ActionResult<BasketDTO>> GetBasketById(int id)
         {
             _logger.LogInformation($"GET BASKET BY ID {id}");
             var basket = await _context.DbSet<Basket>()
@@ -52,7 +52,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BasketReturnDTO>> AddItemToBasket(int productId, int quantity)
+        public async Task<ActionResult<BasketDTO>> AddItemToBasket(int productId, int quantity)
         {
             _logger.LogInformation("ADD BASKET");
             var basket = await RetrieveBasket(GetBuyerId());
@@ -73,9 +73,9 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetBasketById), new { id = basketDto.Id }, basketDto);
         }
 
-        private BasketReturnDTO BasketReturnDto(Basket basket)
+        private BasketDTO BasketReturnDto(Basket basket)
         {
-            var basketDto = _mapper.Map<BasketReturnDTO>(basket);
+            var basketDto = _mapper.Map<BasketDTO>(basket);
             return basketDto;
         }
 
@@ -86,7 +86,7 @@ namespace API.Controllers
                 Response.Cookies.Delete("buyerId");
                 return null;
             }
-            
+
             var basket = await _context.DbSet<Basket>()
                 .Include(x => x.BasketItems)
                 .ThenInclude(x => x.Product)
@@ -114,7 +114,7 @@ namespace API.Controllers
 
                 Response.Cookies.Append("buyerId", buyerId, cookieOptions);
             }
-           
+
             var basket = new Basket { BuyerId = buyerId };
             _context.DbSet<Basket>().Add(basket);
 

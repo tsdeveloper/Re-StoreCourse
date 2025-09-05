@@ -73,6 +73,7 @@ try
             }
         });
     });
+    builder.Services.AddScoped<PaymentService>();
     
     builder.Services.AddApplicationServices(conf);
 

@@ -11,6 +11,7 @@ public class BasketConfig : IEntityTypeConfiguration<Basket>
     b.HasKey(x => x.Id);
 
     b.Property(x => x.BuyerId).HasMaxLength(150).IsRequired();
+    b.Property(x => x.PaymentIntendId).IsRequired(false);
     b.Property(x => x.CreatedAt).HasDefaultValueSql("getdate()").IsRequired();
     b.Property(x => x.UpdateAt).IsRequired(false);
         

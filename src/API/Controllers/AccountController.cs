@@ -54,7 +54,7 @@ public class AccountController : BaseApiController
          Email = user.Email,
          Token = await _serviceToken.GenerateToke(user),
          RefreshToken = await _serviceToken.GenerateRefreshToken(user.Id),
-         Basket = anonBasket != null ? (BasketReturnDTO)anonBasket : (BasketReturnDTO)userBasket
+         Basket = anonBasket != null ? (BasketDTO)anonBasket : (BasketDTO)userBasket
       };
    }
    
@@ -107,7 +107,7 @@ public class AccountController : BaseApiController
       {
          Email = user.Email,
          Token = await _serviceToken.GenerateToke(user),
-         Basket = userBasket != null ? (BasketReturnDTO)userBasket : null
+         Basket = userBasket != null ? (BasketDTO)userBasket : null
       };
    }
    

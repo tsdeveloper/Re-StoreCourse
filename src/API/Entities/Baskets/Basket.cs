@@ -6,6 +6,7 @@ public class Basket : BaseEntity
 {
     public string BuyerId { get; set; }
     public List<BasketItem> BasketItems { get; set; } = new();
+    public string PaymentIntendId { get; set; }
 
     public void AddItem(Product product, int quantity)
     {
@@ -21,6 +22,7 @@ public class Basket : BaseEntity
             BasketItems.Add(new BasketItem
             {
                 Product = product,
+                ProductId = product.Id,
                 Quantity = quantity
             });
         }

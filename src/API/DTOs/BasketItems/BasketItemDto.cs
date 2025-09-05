@@ -2,7 +2,7 @@ using API.Entities.Baskets;
 
 namespace API.DTOs.BasketItems;
 
-public class BasketItemReturnDto
+public class BasketItemDto
 {
     public int Id { get; set; }
     public int Quantity { get; set; }
@@ -12,9 +12,9 @@ public class BasketItemReturnDto
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
 
-    public static explicit operator BasketItemReturnDto(BasketItem entity)
+    public static explicit operator BasketItemDto(BasketItem entity)
     {
-        return new BasketItemReturnDto
+        return new BasketItemDto
         {
             Id = entity.Id,
             Quantity = entity.Quantity,

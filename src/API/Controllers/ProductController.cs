@@ -41,6 +41,8 @@ namespace API.Controllers
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
+
+            var productList = new List<ProductReturnDTO>();
             
             var productDtoList =  _mapper.Map<List<ProductReturnDTO>>(await query.ToListAsync());
             var productPagination = await PagedList<ProductReturnDTO>

@@ -47,6 +47,9 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("Pending");
 
+                    b.Property<string>("PaymentIntendId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
 
@@ -96,6 +99,9 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("PaymentIntendId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
