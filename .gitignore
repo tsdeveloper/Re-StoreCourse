@@ -684,3 +684,4 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,visualstudiocode,csharp,dotnetcore,react,nextjs,aspnetcore
+appsettings.Development.json
