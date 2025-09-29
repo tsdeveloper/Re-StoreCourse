@@ -17,8 +17,7 @@ public class ShippingAddress : Address
             City = address.City,
             State = address.State,
             Zip = address.Zip,
-            Country = address.Country,
-
+            Country = address.Country
         };
     }
 }

@@ -14,19 +14,19 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
         b.Property(x => x.BuyerId)
             .HasMaxLength(150)
             .IsRequired();
-        
+
         b.Property(x => x.OrderDate)
             .IsRequired();
-        
+
         b.Property(x => x.SubTotal)
             .IsRequired();
-        
+
         b.Property(x => x.DeliveryFee)
             .IsRequired();
-        
-        b.Property(x => x.PaymentIntendId).IsRequired(false);
 
-        
+        b.Property(x => x.PaymentIntentId).IsRequired(false);
+
+
         b.Property(x => x.OrderStatus)
             .HasDefaultValue(OrderStatus.Pending)
             .HasConversion<OrderStatusEnumConverters>();

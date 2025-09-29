@@ -10,10 +10,10 @@ public class RoleCustomConfig : IEntityTypeConfiguration<RoleCustom>
     public void Configure(EntityTypeBuilder<RoleCustom> b)
     {
         b.HasKey(x => x.Id);
-        
+
         b.HasMany<IdentityUserRole<int>>()
             .WithOne()
-            .HasForeignKey(ur =>  ur.UserId)
+            .HasForeignKey(ur => ur.RoleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);
     }

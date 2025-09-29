@@ -1,6 +1,5 @@
 using System.Text;
 using API.Data;
-using API.Entities;
 using API.Entities.JWT;
 using API.Entities.Roles;
 using API.Entities.Users;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extensions;
+
 public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection service, IConfiguration config)
@@ -31,17 +31,14 @@ public static class ApplicationServiceExtensions
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                );
+            );
         });
 
-        service.AddIdentityCore<UserCustom>(opt =>
-            {
-                opt.User.RequireUniqueEmail = true;
-            })
+        service.AddIdentityCore<UserCustom>(opt => { opt.User.RequireUniqueEmail = true; })
             .AddDefaultTokenProviders()
             .AddRoles<RoleCustom>()
             .AddEntityFrameworkStores<RestoreCourseDbContext>();
-        
+
         var jwtSettings = service.BuildServiceProvider().GetService<IOptions<JWTSettings>>();
 
         service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,10 +53,10 @@ public static class ApplicationServiceExtensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Value.TokenKey))
                 };
             });
-        
+
         service.AddAuthorization();
 
-    service.AddAutoMapper(typeof(Program));
+        service.AddAutoMapper(typeof(Program));
         return service;
     }
 }

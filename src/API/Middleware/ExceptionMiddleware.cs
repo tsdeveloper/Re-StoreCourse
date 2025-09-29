@@ -6,9 +6,9 @@ namespace API.Middleware;
 
 public class ExceptionMiddleware
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionMiddleware> _logger;
     private readonly IHostEnvironment _env;
+    private readonly ILogger<ExceptionMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
     {
@@ -32,8 +32,8 @@ public class ExceptionMiddleware
             var response = new ProblemDetails
             {
                 Status = 500,
-                Detail = _env.IsDevelopment() ? ex.StackTrace?.ToString() : null,
-                Title = ex.Message,
+                Detail = _env.IsDevelopment() ? ex.StackTrace : null,
+                Title = ex.Message
             };
 
             var options = JsonConvert.SerializeObject(response,

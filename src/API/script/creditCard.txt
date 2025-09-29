@@ -1,0 +1,78 @@
+OS DETALHES DO CARTÃO FORNECIDOS ABAIXO SÃO GERADOS DE VCCGENERATOR.ORG
+
+ 1. MARCA 	: VISA
+    NÚMERO	: 4078017863741297
+    BANCO	: BANCO DO BRASIL, S.A.
+    NOME		: Isabella Guzman
+    MORADO	: Rua Itaja 677
+    PAÍS		: BRAZIL
+    DINHEIRO	: $890
+    CVV/CVC	: 525
+    VALIDADE	: 09/2032
+    PIN		: 8134
+    
+ 2. MARCA 	: VISA
+    NÚMERO	: 4078018381202796
+    BANCO	: BANCO DO BRASIL, S.A.
+    NOME		: Eileen Lightfoot
+    MORADO	: Rua Francisco Amorim 439
+    PAÍS		: BRAZIL
+    DINHEIRO	: $616
+    CVV/CVC	: 232
+    VALIDADE	: 10/2032
+    PIN		: 6311
+    
+ 3. MARCA 	: VISA
+    NÚMERO	: 4695226455945025
+    BANCO	: BANCO DO BRASIL, S.A.
+    NOME		: Nicolai Kadiev
+    MORADO	: Rua do Rio 1209
+    PAÍS		: BRAZIL
+    DINHEIRO	: $775
+    CVV/CVC	: 691
+    VALIDADE	: 05/2025
+    PIN		: 8625
+    
+ 4. MARCA 	: VISA
+    NÚMERO	: 4984075336676113
+    BANCO	: BANCO DO BRASIL, S.A.
+    NOME		: Hampus Lightfoot
+    MORADO	: Rua VC 77 958
+    PAÍS		: BRAZIL
+    DINHEIRO	: $971
+    CVV/CVC	: 662
+    VALIDADE	: 12/2028
+    PIN		: 3737
+    
+ 5. MARCA 	: VISA
+    NÚMERO	: 4444544048346962
+    BANCO	: BANCO DO BRASIL, S.A.
+    NOME		: Nwando Ghanem
+    MORADO	: Rua Josephina Marochio Boscoli 1438
+    PAÍS		: BRAZIL
+    DINHEIRO	: $959
+    CVV/CVC	: 231
+    VALIDADE	: 01/2029
+    PIN		: 8408
+    
+
+
+RECURSOS ÚTEIS:
+
+1. GERADOR DE CARTÃO DE CRÉDITO: https://www.vccgenerator.org/br/
+
+2. VALIDADOR DE CARTÃO DE CRÉDITO: https://www.vccgenerator.org/br/validador-de-cartao-de-credito/
+
+3. VERIFICADOR BIN: https://www.vccgenerator.org/br/verificador-bin/
+
+4. PESQUISA DE BIN: https://www.vccgenerator.org/br/pesquisa-bin/
+
+5. Blog do VCCGenerator: https://www.vccgenerator.org/blog/
+
+
+AVISO LEGAL:
+
+Nossa ferramenta Gerador de Cartão de Crédito (incluindo Gerador de BIN) não gera números de cartão de crédito que tenham dinheiro real e não pertençam a nenhum titular do cartão. Não tente utilizar dados de cartão de crédito gerados por nossa ferramenta para nenhuma transação, pois a compra não poderá ser efetivada. Eles são, no entanto, usados para testar sistemas de processamento de pagamentos ou fins de desenvolvimento.
+
+Para obter mais informações, consulte nossas perguntas frequentes: https://www.vccgenerator.org/faqs/
+

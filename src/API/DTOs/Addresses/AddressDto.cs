@@ -23,7 +23,7 @@ public class AddressDto : BaseEntity
             City = entity.City,
             State = entity.State,
             Zip = entity.Zip,
-            Country = entity.Country,
+            Country = entity.Country
         };
     }
 }

@@ -4,7 +4,7 @@
 GET {{API_HostAddress}}/product
 Accept: application/json
 Content-Type: application/json
-    
+
 ###
 
 ### GET PRODUCTS BY ID

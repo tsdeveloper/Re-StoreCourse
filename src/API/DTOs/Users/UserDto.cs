@@ -1,4 +1,3 @@
-using API.DTOs.Addresses;
 using API.DTOs.Baskets;
 
 namespace API.DTOs.Users;
@@ -10,4 +9,3 @@ public class UserLoginDto
     public string RefreshToken { get; set; }
     public BasketDTO Basket { get; set; }
 }
-

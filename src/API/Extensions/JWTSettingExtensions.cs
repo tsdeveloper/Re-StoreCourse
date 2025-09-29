@@ -9,7 +9,7 @@ public static class JWTSettingExtensions
     {
         services.Configure<JWTSettings>(configuration.GetSection(nameof(JWTSettings)));
         services.Configure<StripeSettings>(configuration.GetSection(nameof(StripeSettings)));
-        
+
         return services;
     }
 }

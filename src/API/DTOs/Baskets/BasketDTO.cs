@@ -9,21 +9,23 @@ public class BasketDTO
     public string BuyerId { get; set; }
     public List<BasketItemDto> BasketItems { get; set; } = new();
 
-    public string PaymentIntendId { get; set; }
+    public string PaymentIntentId { get; set; }
+    public string ClientSecret { get; set; }
+
 
     public static explicit operator BasketDTO(Basket entity)
     {
         if (entity == null) return null;
-        
-        var dto = new  BasketDTO
+
+        var dto = new BasketDTO
         {
             Id = entity.Id,
             BuyerId = entity.BuyerId,
-            PaymentIntendId = entity.PaymentIntendId,
-           
+            PaymentIntentId = entity.PaymentIntentId,
+            ClientSecret = entity.ClientSecret,
         };
         dto.BasketItems.AddRange(entity.BasketItems.Select(x => (BasketItemDto)x).ToList());
-        
+
         return dto;
     }
 }

@@ -5,13 +5,13 @@
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class fieldPaymentIntendIdTableBasket : Migration
+    public partial class addField_Basket : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "PaymentIntendId",
+                name: "ClientSecret",
                 table: "Basket",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -21,7 +21,7 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PaymentIntendId",
+                name: "ClientSecret",
                 table: "Basket");
         }
     }

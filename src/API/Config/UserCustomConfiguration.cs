@@ -46,7 +46,7 @@ public class UserCustomConfiguration : IEntityTypeConfiguration<UserCustom>
         // Configura o relacionamento do Identity com Roles
         builder.HasMany<IdentityUserRole<int>>()
             .WithOne()
-            .HasForeignKey(ur =>  ur.UserId)
+            .HasForeignKey(ur => ur.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);
 
@@ -63,7 +63,5 @@ public class UserCustomConfiguration : IEntityTypeConfiguration<UserCustom>
             .HasForeignKey(uc => uc.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
-        
-       
     }
 }

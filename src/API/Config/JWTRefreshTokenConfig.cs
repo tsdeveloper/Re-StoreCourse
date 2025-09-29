@@ -13,11 +13,10 @@ public class JWTRefreshTokenConfig : IEntityTypeConfiguration<JWTRefreshToken>
         b.Property(x => x.ExpiredAt).IsRequired();
         b.Property(x => x.IsRevoked).IsRequired();
         b.Property(x => x.CreatedAt)
-            .HasDefaultValueSql("getdate()").IsRequired();        
+            .HasDefaultValueSql("getdate()").IsRequired();
         b.Property(x => x.UpdateAt).IsRequired(false);
         b.HasOne(x => x.User)
             .WithMany(x => x.RefreshTokenList)
             .HasForeignKey(x => x.UserId);
-    
     }
 }

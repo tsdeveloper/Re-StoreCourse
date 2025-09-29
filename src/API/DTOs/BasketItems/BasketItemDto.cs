@@ -22,7 +22,7 @@ public class BasketItemDto
             BasketId = entity.BasketId,
             Name = entity.Product.Name,
             PictureUrl = entity.Product.PictureUrl,
-            Price = entity.Product.Price,
+            Price = entity.Product.Price
         };
     }
 }

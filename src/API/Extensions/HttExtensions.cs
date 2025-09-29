@@ -13,6 +13,5 @@ public static class HttExtensions
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         }));
         response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
-
     }
 }

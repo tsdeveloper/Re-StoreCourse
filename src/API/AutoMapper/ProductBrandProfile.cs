@@ -1,4 +1,3 @@
-using API.DTOs;
 using API.DTOs.ProductBrands;
 using API.Entities.Products;
 using AutoMapper;
@@ -7,8 +6,8 @@ namespace API.AutoMapper;
 
 public class ProductBrandProfile : Profile
 {
-  public ProductBrandProfile()
-  {
-    CreateMap<ProductBrand, ProductBrandReturnDTO>();
-  }
+    public ProductBrandProfile()
+    {
+        CreateMap<ProductBrand, ProductBrandReturnDTO>();
+    }
 }

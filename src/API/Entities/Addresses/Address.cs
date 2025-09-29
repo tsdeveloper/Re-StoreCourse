@@ -11,7 +11,7 @@ public class Address : BaseEntity
     public string State { get; set; }
     public string Zip { get; set; }
     public string Country { get; set; }
-    
+
     public static explicit operator Address(ShippingAddressDto address)
     {
         return new Address
@@ -22,8 +22,7 @@ public class Address : BaseEntity
             City = address.City,
             State = address.State,
             Zip = address.Zip,
-            Country = address.Country,
-
+            Country = address.Country
         };
     }
 }

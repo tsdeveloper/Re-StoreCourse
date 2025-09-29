@@ -1,7 +1,5 @@
-using API.DTOs.Products;
 using API.DTOs.ShippingAddresses;
 using API.Entities.Aggregate;
-using API.Entities.Enum;
 
 namespace API.DTOs.Orders;
 
@@ -32,10 +30,9 @@ public class OrderDto
             OrderItems = entity.OrderItems.Select(x => (OrderItemDto)x).ToList(),
             SubTotal = entity.SubTotal,
             DeliveryFee = entity.DeliveryFee,
-            OrderStatus = entity.OrderStatus.ToString(),
+            OrderStatus = entity.OrderStatus.ToString()
         };
     }
-
 }
 
 public class OrderItemDto
@@ -56,7 +53,7 @@ public class OrderItemDto
             Name = entity.ItemOrdered.Name,
             PictureUrl = entity.ItemOrdered.PictureUrl,
             Price = entity.Price,
-            Quantity = entity.Quantity,
+            Quantity = entity.Quantity
         };
     }
 }

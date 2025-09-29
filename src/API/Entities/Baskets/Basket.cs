@@ -6,7 +6,8 @@ public class Basket : BaseEntity
 {
     public string BuyerId { get; set; }
     public List<BasketItem> BasketItems { get; set; } = new();
-    public string PaymentIntendId { get; set; }
+    public string? PaymentIntentId { get; set; }
+    public string? ClientSecret { get; set; }
 
     public void AddItem(Product product, int quantity)
     {
@@ -18,18 +19,14 @@ public class Basket : BaseEntity
         var existingItem = FindItem(product.Id);
 
         if (existingItem == null)
-        {
             BasketItems.Add(new BasketItem
             {
                 Product = product,
                 ProductId = product.Id,
                 Quantity = quantity
             });
-        }
         else
-        {
             existingItem.Quantity += quantity;
-        }
     }
 
     private BasketItem? FindItem(int productId)
@@ -44,7 +41,7 @@ public class Basket : BaseEntity
 
         if (existingItem.Quantity > quantity && existingItem.Quantity > 0)
             existingItem.Quantity -= quantity;
-        else 
+        else
             existingItem.Quantity = 0;
 
         if (existingItem.Quantity == 0) BasketItems.Remove(existingItem);

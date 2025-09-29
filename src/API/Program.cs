@@ -1,7 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
-using API.Entities;
 using API.Entities.Roles;
 using API.Entities.Users;
 using API.Extensions;
@@ -11,42 +10,47 @@ using API.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
+using Stripe;
+using TokenService = API.Service.TokenService;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
     Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
+        .WriteTo.Console()
+        .CreateLogger();
 
     Log.Information("Starting up");
-    
+
     builder.Services.AddConfig(builder.Configuration);
-    
+
+    builder.Services.AddHttpContextAccessor();
+
     var serviceProvider = builder.Services.BuildServiceProvider();
     var conf = serviceProvider.GetRequiredService<IConfiguration>();
 
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+        .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         })
-    .AddNewtonsoftJson(options => {
-        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-        // options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
-        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-    });
+        .AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            // options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
+            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        });
 
     builder.Services.AddSerilog();
     builder.Services.AddScoped<TokenService>();
+    builder.Services.AddScoped<PaymentIntentService>();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c =>
     {
@@ -64,7 +68,7 @@ try
                 Type = ReferenceType.SecurityScheme
             }
         };
-        
+
         c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
         c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
@@ -74,21 +78,18 @@ try
         });
     });
     builder.Services.AddScoped<PaymentService>();
-    
+
     builder.Services.AddApplicationServices(conf);
 
     var app = builder.Build();
-    
+
     app.UseMiddleware<ExceptionMiddleware>();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI(c =>
-        {
-            c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
-        });
+        app.UseSwaggerUI(c => { c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true"); });
     }
 
     app.UseCors("CorsPolicyAllowFront");

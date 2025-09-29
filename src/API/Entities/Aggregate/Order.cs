@@ -12,6 +12,5 @@ public class Order
     public decimal SubTotal { get; set; }
     public decimal DeliveryFee { get; set; }
     public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
-    public string PaymentIntendId { get; set; }
-
+    public string PaymentIntentId { get; set; }
 }

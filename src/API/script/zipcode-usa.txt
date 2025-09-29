@@ -1,0 +1,54 @@
+
+Random Zip Code
+ 
+10
+ 
+04662
+Northeast Harbor, ME
+
+Maine
+
+14738
+Frewsburg, NY
+
+New York
+
+68023
+Fort Calhoun, NE
+
+Nebraska
+
+17563
+Peach Bottom, PA
+
+Pennsylvania
+
+92704
+Santa Ana, CA
+
+California
+
+48637
+Merrill, MI
+
+Michigan
+
+84003
+American Fork, UT
+
+Utah
+
+28119
+Morven, NC
+
+North Carolina
+
+05488
+Swanton, VT
+
+Vermont
+
+30022
+Alpharetta, GA
+
+Georgia

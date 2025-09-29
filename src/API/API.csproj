@@ -1,80 +1,81 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+      <UserSecretsId>ad5da993-9408-4535-8ef1-ab163f5db0d2</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="Bogus" Version="35.6.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.19" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.19" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0-dev-02301" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0-dev-02305" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0-dev-02314" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
-    <PackageReference Include="Stripe.net" Version="48.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Entities\Users\._UserAddress.cs" />
-    <Compile Remove="Entities\Roles\._RoleCustom.cs" />
-    <Compile Remove="Entities\Aggregate\._ProductItemOrdered.cs" />
-    <Compile Remove="Entities\Addresses\._Address.cs" />
-    <Compile Remove="DTOs\ShippingAddresses\._ShippingAddressDto.cs" />
-    <Compile Remove="DTOs\Products\._ProductItemOrderedDto.cs" />
-    <Compile Remove="DTOs\Orders\._OrderDto.cs" />
-    <Compile Remove="DTOs\Logins\._LoginDto.cs" />
-    <Compile Remove="DTOs\JWTRefreshTokens\._JWTRefreshTokenDto.cs" />
-    <Compile Remove="DTOs\BasketItems\._BasketItemDto.cs" />
-    <Compile Remove="DTOs\Addresses\._AddressDto.cs" />
-    <Compile Remove="Config\._RoleCustomConfig.cs" />
-    <Compile Remove="Config\._ProductTypeConfig.cs" />
-    <Compile Remove="Config\._ProductConfig.cs" />
-    <Compile Remove="Config\._ProductBrandConfig.cs" />
-    <Compile Remove="Config\._OrderConfig.cs" />
-    <Compile Remove="Config\._JWTRefreshTokenConfig.cs" />
-    <Compile Remove="Config\._BasketItemConfig.cs" />
-    <Compile Remove="Config\._BasketConfig.cs" />
-    <Compile Remove="AutoMapper\._ProductTypeProfile.cs" />
-    <Compile Remove="AutoMapper\._ProductMapperDomain.cs" />
-    <Compile Remove="AutoMapper\._ProductBrandProfile.cs" />
-    <Compile Remove="AutoMapper\._BasketProfile.cs" />
-    <Compile Remove="DTOs\Products\._ProductDTO.cs" />
-    <Compile Remove="Helpers\Products\._ProductExtension.cs" />
-    <Compile Remove="DTOs\Registers\._RegisterDto.cs" />
-    <Compile Remove="DTOs\ProductTypes\._ProductTypeDTO.cs" />
-    <Compile Remove="DTOs\ProductBrands\._ProductBrandDTO.cs" />
-    <Compile Remove="Controllers\._ProductController.cs" />
-    <Compile Remove="Controllers\._OrdersController.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Entities\._Users" />
-    <None Remove="Entities\._Roles" />
-    <None Remove="Entities\._Products" />
-    <None Remove="Entities\._JWT" />
-    <None Remove="Entities\._Baskets" />
-    <None Remove="Entities\._Aggregate" />
-    <None Remove="Https\baskets\._get-basket.http" />
-    <None Remove="Https\._products" />
-    <None Remove="Https\._baskets" />
-    <None Remove="DTOs\._UserLogins" />
-    <None Remove="DTOs\._ShippingAddresses" />
-    <None Remove="DTOs\._Registers" />
-    <None Remove="._Service" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.19" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.19" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Serilog" Version="4.2.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0-dev-02301" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0-dev-02305" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0-dev-02314" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+        <PackageReference Include="Stripe.net" Version="48.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Entities\Users\._UserAddress.cs" />
+        <Compile Remove="Entities\Roles\._RoleCustom.cs" />
+        <Compile Remove="Entities\Aggregate\._ProductItemOrdered.cs" />
+        <Compile Remove="Entities\Addresses\._Address.cs" />
+        <Compile Remove="DTOs\ShippingAddresses\._ShippingAddressDto.cs" />
+        <Compile Remove="DTOs\Products\._ProductItemOrderedDto.cs" />
+        <Compile Remove="DTOs\Orders\._OrderDto.cs" />
+        <Compile Remove="DTOs\Logins\._LoginDto.cs" />
+        <Compile Remove="DTOs\JWTRefreshTokens\._JWTRefreshTokenDto.cs" />
+        <Compile Remove="DTOs\BasketItems\._BasketItemDto.cs" />
+        <Compile Remove="DTOs\Addresses\._AddressDto.cs" />
+        <Compile Remove="Config\._RoleCustomConfig.cs" />
+        <Compile Remove="Config\._ProductTypeConfig.cs" />
+        <Compile Remove="Config\._ProductConfig.cs" />
+        <Compile Remove="Config\._ProductBrandConfig.cs" />
+        <Compile Remove="Config\._OrderConfig.cs" />
+        <Compile Remove="Config\._JWTRefreshTokenConfig.cs" />
+        <Compile Remove="Config\._BasketItemConfig.cs" />
+        <Compile Remove="Config\._BasketConfig.cs" />
+        <Compile Remove="AutoMapper\._ProductTypeProfile.cs" />
+        <Compile Remove="AutoMapper\._ProductMapperDomain.cs" />
+        <Compile Remove="AutoMapper\._ProductBrandProfile.cs" />
+        <Compile Remove="AutoMapper\._BasketProfile.cs" />
+        <Compile Remove="DTOs\Products\._ProductDTO.cs" />
+        <Compile Remove="Helpers\Products\._ProductExtension.cs" />
+        <Compile Remove="DTOs\Registers\._RegisterDto.cs" />
+        <Compile Remove="DTOs\ProductTypes\._ProductTypeDTO.cs" />
+        <Compile Remove="DTOs\ProductBrands\._ProductBrandDTO.cs" />
+        <Compile Remove="Controllers\._ProductController.cs" />
+        <Compile Remove="Controllers\._OrdersController.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Entities\._Users" />
+        <None Remove="Entities\._Roles" />
+        <None Remove="Entities\._Products" />
+        <None Remove="Entities\._JWT" />
+        <None Remove="Entities\._Baskets" />
+        <None Remove="Entities\._Aggregate" />
+        <None Remove="Https\baskets\._get-basket.http" />
+        <None Remove="Https\._products" />
+        <None Remove="Https\._baskets" />
+        <None Remove="DTOs\._UserLogins" />
+        <None Remove="DTOs\._ShippingAddresses" />
+        <None Remove="DTOs\._Registers" />
+        <None Remove="._Service" />
+    </ItemGroup>
 </Project>
