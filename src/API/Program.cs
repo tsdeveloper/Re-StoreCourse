@@ -78,7 +78,7 @@ try
         });
     });
     builder.Services.AddScoped<PaymentService>();
-
+    
     builder.Services.AddApplicationServices(conf);
 
     var app = builder.Build();
@@ -92,13 +92,16 @@ try
         app.UseSwaggerUI(c => { c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true"); });
     }
 
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+
     app.UseCors("CorsPolicyAllowFront");
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseStaticFiles();
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
     app.MapControllers();
+    app.MapFallbackToController("Index", "Fallback");
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<RestoreCourseDbContext>();
