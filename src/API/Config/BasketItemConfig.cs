@@ -11,7 +11,7 @@ public class BasketItemConfig : IEntityTypeConfiguration<BasketItem>
         b.HasKey(x => x.Id);
 
         b.Property(x => x.Quantity).IsRequired();
-        b.Property(x => x.CreatedAt).HasDefaultValueSql("getdate()").IsRequired();
+        b.Property(x => x.CreatedAt).HasDefaultValueSql("now()").IsRequired();
         b.Property(x => x.UpdateAt).IsRequired(false);
     }
 }

@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+        - POSTGRES_PASSWORD=Senha@123
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=dev-docker-restorecoursedb        
+    ports:
+        - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
   # api:
   #   container_name: api
   #   build:
@@ -9,20 +21,20 @@ services:
   #   networks:
   #     - localdev    
 
-  mssql:
-    image: mcr.microsoft.com/azure-sql-edge:latest
-    environment:
-      - "ACCEPT_EULA=1"
-      - "MSSQL_SA_PASSWORD=Senha@123"
-    ports:
-      - "1433:1433"
-    hostname: mssql
-    container_name: mssql
-    volumes:
-      - "mssql-azuresql-edge-data:/var/opt/mssql"
+  #mssql:
+  #  image: mcr.microsoft.com/azure-sql-edge:latest
+  #  environment:
+  #    - "ACCEPT_EULA=1"
+  #    - "MSSQL_SA_PASSWORD=Senha@123"
+  #  ports:
+  #    - "1433:1433"
+  #  hostname: mssql
+  #  container_name: mssql
+  #  volumes:
+  #    - "mssql-azuresql-edge-data:/var/opt/mssql"
 
 volumes:
-  mssql-azuresql-edge-data:
+  postgres_data:
     
 networks:
   localdev:

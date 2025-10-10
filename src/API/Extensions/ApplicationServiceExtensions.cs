@@ -18,12 +18,14 @@ public static class ApplicationServiceExtensions
         var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
         var connString = isDevelopment
-            ? config.GetConnectionString("DEV-DOCKER-SQLSERVER")
-            : config.GetConnectionString("PRD-DOCKER-SQLSERVER");
+            ? config.GetConnectionString("DEV-DOCKER-POSTGRESQL")
+            : config.GetConnectionString("PRD-DOCKER-POSTGRESQL");
 
+        // service.AddDbContext<RestoreCourseDbContext>(x =>
+        //     x.UseSqlServer(connString));
+        
         service.AddDbContext<RestoreCourseDbContext>(x =>
-            x.UseSqlServer(connString));
-
+            x.UseNpgsql(connString));
         service.AddCors(options =>
         {
             options.AddPolicy("CorsPolicyAllowFront",

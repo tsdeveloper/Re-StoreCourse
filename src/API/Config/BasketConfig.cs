@@ -13,7 +13,7 @@ public class BasketConfig : IEntityTypeConfiguration<Basket>
         b.Property(x => x.BuyerId).HasMaxLength(150).IsRequired();
         b.Property(x => x.PaymentIntentId).IsRequired(false);
         b.Property(x => x.ClientSecret).IsRequired(false);
-        b.Property(x => x.CreatedAt).HasDefaultValueSql("getdate()").IsRequired();
+        b.Property(x => x.CreatedAt).HasDefaultValueSql("now()").IsRequired();
         b.Property(x => x.UpdateAt).IsRequired(false);
 
         b.HasMany(x => x.BasketItems)
